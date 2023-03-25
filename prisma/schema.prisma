@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  email        String   @unique
+  provider     String
+  taxedIncomes TaxedIncome[]
+}
+
+model TaxedIncome {
+  id                             String   @id @default(uuid())
+  createdAt                      DateTime @default(now())
+  updatedAt                      DateTime @updatedAt
+  userId                         String
+  user                           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount                         Decimal
+  taxRate                        Decimal
+  currencyCode                   String
+  currencyExchangeProviderBank   String
+  day                            Int
+  month                          Int
+  year                           Int
+  taxablePeriod                  Int
+}

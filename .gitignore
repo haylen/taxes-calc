@@ -1,0 +1,8 @@
+.cache
+.DS_Store
+.env
+.vscode
+build
+node_modules
+public/build
+prisma/dev.db
